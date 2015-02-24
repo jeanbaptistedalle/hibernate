@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="my.first.step.common.DailyRecord" table="daily_record">
+        <id name="recordId" type="java.lang.Integer">
+            <column name="RECORD_ID" />
+            <generator class="identity" />
+        </id>
+        
+        <property name="volume" type="java.lang.Long">
+            <column name="VOLUME" />
+        </property>
+        
+        <property name="date" type="date">
+            <column name="DATE" length="10" not-null="true"/>
+        </property>
+        
+		<!-- Ici, on indique que l'attribut dailyRecords correspond à une relation 
+			many-to-one. On indique de plus que l'on fera la correspondance grâce à la colonne stock_id. -->        
+        <many-to-one name="stock" class="my.first.step.common.Stock" fetch="select">
+            <column name="STOCK_ID" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>
