@@ -23,8 +23,9 @@ import org.hibernate.Session;
  *         "root". Si cela ne correspond pas, il est possible de modifier les
  *         valeurs prédéfinies dans le fichier hibernate.cfg.xml
  * 
- *         -Il existe une table stock dans la base de données (celle-ci doit
- *         être créée grâce au fichier stock.sql)
+ *         -Il existe une table stock et une table daily_record dans la base de
+ *         données (celle-ci doivent être créées grâce au fichier stock.sql et
+ *         dailyrecord.sql)
  *
  */
 public class MyFirstStepWithHibernate {
@@ -187,9 +188,12 @@ public class MyFirstStepWithHibernate {
 		query.setDate("today", new Date());
 		/*
 		 * La requête retourne ensuite les données directement sous forme d'une
-		 * liste d'objet. On remarquera que, malgré le fait que l'on execute une
-		 * requête effectuant des tests sur dailyRecords, la liste n'est pas
-		 * chargé et une autre requête sera tout de même executée.
+		 * liste d'objet. Hibernate étant par défaut configuré en Lazy, il ne
+		 * charge que les données de base. Ainsi, dans notre cas, la liste de
+		 * DailyRecord n'est chargée que parceque l'on décide de l'utiliser pour
+		 * un affichage. Le Lazy loading permet donc d'éviter de remonter des
+		 * grappes de données trop importantes qui ne seront de toute façon pas
+		 * utilisées ensuite.
 		 */
 		List<Stock> list = query.list();
 		for (Stock s : list) {
